@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solara Script Hub</title>
+    <style>
+        /* General Style */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f0f0f;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid #333;
+            margin-bottom: 30px;
+        }
+
+        h1 { color: #00ff88; margin-bottom: 10px; }
+        p { color: #aaa; }
+
+        /* Download Section */
+        .download-card {
+            background: linear-gradient(145deg, #1a1a1a, #252525);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #00ff88;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+        }
+
+        .btn-download {
+            background-color: #00ff88;
+            color: #000;
+            padding: 15px 40px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            display: inline-block;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        .btn-download:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Scripts Section */
+        .script-card {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #007bff;
+        }
+
+        .script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        code {
+            display: block;
+            background: #000;
+            padding: 15px;
+            border-radius: 5px;
+            color: #00d9ff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .btn-copy {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-copy:hover { background: #444; }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #555;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>SOLARA HUB</h1>
+        <p>The best scripts and tools in one place.</p>
+    </header>
+
+    <!-- MAIN DOWNLOAD -->
+    <div class="download-card">
+        <h2>Solara Booster v1.0</h2>
+        <p>Download the latest booster to improve your experience.</p>
+        <!-- Replace 'booster.zip' with your actual file name on GitHub -->
+        <a href="booster.zip" class="btn-download" download>DOWNLOAD NOW</a>
+    </div>
+
+    <h2>Available Scripts</h2>
+
+    <!-- SCRIPT 1 -->
+    <div class="script-card">
+        <div class="script-header">
+            <span><strong>Speed & Jump Hack</strong></span>
+            <button class="btn-copy" onclick="copyCode('s1')">Copy</button>
+        </div>
+        <code id="s1">loadstring(game:HttpGet("https://raw.githubusercontent.com"))()</code>
+    </div>
+
+    <!-- SCRIPT 2 -->
+    <div class="script-card">
+        <div class="script-header">
+            <span><strong>Infinite Yield (Admin)</strong></span>
+            <button class="btn-copy" onclick="copyCode('s2')">Copy</button>
+        </div>
+        <code id="s2">loadstring(game:HttpGet('https://raw.githubusercontent.com'))()</code>
+    </div>
+
+</div>
+
+<footer>
+    &copy; 2024 Solara Hub - Built for the community.
+</footer>
+
+<script>
+    function copyCode(id) {
+        const codeElement = document.getElementById(id);
+        const text = codeElement.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = codeElement.previousElementSibling.querySelector('.btn-copy');
+            btn.innerText = "Copied!";
+            setTimeout(() => btn.innerText = "Copy", 2000);
+        });
+    }
+</script>
+
+</body>
+</html>
