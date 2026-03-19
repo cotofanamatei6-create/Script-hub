@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RBLXScript Hub - Dashboard</title>
     <style>
-        /* Stil General - PĂSTRAT */
+        /* Stil General */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #0f0f0f;
@@ -14,7 +14,7 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* BARA DE NAVIGARE - PĂSTRATĂ ȘI REPARATĂ */
+        /* BARA DE NAVIGARE */
         nav {
             width: 100%;
             background: #1a1a1a;
@@ -30,11 +30,8 @@
         .nav-logo { font-size: 22px; font-weight: bold; color: #00ff88; text-decoration: none; }
         .search-box { background: #000; border: 1px solid #333; color: white; padding: 8px 15px; border-radius: 20px; width: 250px; outline: none; }
 
-        .user-profile { display: none; align-items: center; gap: 10px; background: #252525; padding: 5px 15px; border-radius: 25px; border: 1px solid #00ff88; }
-        .user-avatar { width: 30px; height: 30px; background: #00ff88; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; }
-
-        /* LAYOUT NOU PENTRU CHAT ȘI SCRIPTS */
-        .main-container {
+        /* LAYOUT */
+        .main-layout {
             display: flex;
             width: 100%;
             max-width: 1200px;
@@ -44,43 +41,43 @@
         }
 
         .scripts-area { flex: 3; }
-        
-        /* CHAT-UL TĂU GLOBAL */
-        .global-chat {
+
+        /* CHAT GLOBAL */
+        .chat-sidebar {
             flex: 1;
-            background: #1a1a1a;
+            background: #161616;
             border-radius: 10px;
             border: 1px solid #333;
-            height: 500px;
+            height: 550px;
             display: flex;
             flex-direction: column;
             position: sticky;
-            top: 80px;
+            top: 70px;
         }
 
         .chat-header { background: #00ff88; color: #000; padding: 10px; font-weight: bold; text-align: center; border-radius: 10px 10px 0 0; }
-        #chatMessages { flex: 1; padding: 10px; overflow-y: auto; font-size: 0.85rem; }
-        .owner-msg { color: #00ff88; margin-bottom: 12px; border-left: 2px solid #00ff88; padding-left: 8px; }
-
-        /* CARDURILE TALE DE SCRIPTURI */
-        .script-card { background: #161616; padding: 20px; border-radius: 10px; border-left: 5px solid #007bff; margin-bottom: 20px; }
-        .code-wrapper { background: #000; border-radius: 5px; border: 1px solid #222; margin-top: 10px; overflow: hidden; }
+        #chatMessages { flex: 1; padding: 10px; overflow-y: auto; font-size: 0.85rem; display: flex; flex-direction: column; gap: 8px; }
+        .msg { background: #222; padding: 8px; border-radius: 5px; border-left: 3px solid #00ff88; }
         
+        .chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; flex-direction: column; gap: 5px; }
+        #chatInput { background: #000; border: 1px solid #444; color: white; padding: 8px; border-radius: 5px; outline: none; }
+        #sendBtn { background: #00ff88; color: #000; border: none; padding: 8px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        #sendBtn:disabled { background: #444; cursor: not-allowed; }
+
+        /* SCRIPT CARDS */
+        .script-card { background: #1a1a1a; padding: 20px; border-radius: 10px; border-left: 5px solid #007bff; margin-bottom: 20px; }
+        .script-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        
+        /* FIX BUG SHOW MORE */
+        .code-container { background: #000; border-radius: 5px; border: 1px solid #222; margin-top: 10px; overflow: hidden; }
         code { display: block; padding: 15px; color: #00d9ff; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; }
         
-        /* REPARARE BUG SHOW MORE */
-        .collapsed-box { max-height: 85px; transition: max-height 0.3s ease; }
-        .btn-toggle { background: #222; color: #00ff88; border: none; width: 100%; padding: 8px; cursor: pointer; border-top: 1px solid #333; font-weight: bold; }
+        .collapsed { max-height: 80px; }
+        .btn-toggle { background: #252525; color: #00ff88; border: none; width: 100%; padding: 10px; cursor: pointer; border-top: 1px solid #333; }
         .btn-copy { background: #00ff88; color: #000; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
 
-        /* LISTA DE CONTURI */
-        .admin-logs { background: #111; padding: 15px; border-radius: 10px; margin-top: 30px; border: 1px dashed #444; }
-        #userHistory { font-size: 0.8rem; color: #777; display: flex; flex-wrap: wrap; gap: 8px; }
-
-        /* MODAL LOGIN */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
-        .modal-content { background: #1a1a1a; margin: 15% auto; padding: 30px; border: 1px solid #00ff88; width: 320px; border-radius: 15px; text-align: center; }
-        .modal-content input { width: 100%; padding: 10px; margin: 10px 0; background: #000; border: 1px solid #333; color: white; border-radius: 5px; box-sizing: border-box; }
+        header { text-align: center; padding: 20px 0; }
+        h1 { color: #00ff88; font-size: 3rem; margin: 0; }
     </style>
 </head>
 <body>
@@ -88,124 +85,142 @@
 <nav>
     <a href="#" class="nav-logo">RBLX HUB</a>
     <input type="text" id="searchBar" class="search-box" placeholder="Search scripts...">
-    <div id="navAuth">
-        <button onclick="openLogin()" style="background:#333; color:white; border:1px solid #00ff88; padding:8px 15px; border-radius:5px; cursor:pointer;">Login</button>
-    </div>
-    <div class="user-profile" id="userProfile">
-        <div class="user-avatar" id="avatarLetter">O</div>
-        <span id="displayUsername" style="font-weight:bold;">Owner</span>
-        <button onclick="logout()" style="background:none; border:none; color:#ff4444; cursor:pointer; font-size:11px; margin-left:5px;">Logout</button>
-    </div>
+    <div style="color: #00ff88; font-weight: bold;">PUBLIC ACCESS</div>
 </nav>
 
-<div class="main-container">
+<div class="main-layout">
     <div class="scripts-area">
-        <header style="text-align:center; padding: 20px 0;">
-            <h1 style="color:#00ff88; margin:0; font-size: 3rem;">RBLXSCRIPT HUB</h1>
-            <p style="color:#666;">The community's premium collection.</p>
+        <header>
+            <h1>RBLXSCRIPT HUB</h1>
+            <p style="color: #666;">The best scripts for the community.</p>
         </header>
 
         <div id="scriptList">
-            <!-- SCRIPT 1 - PĂSTRAT -->
+            <!-- SCRIPT 1 -->
             <div class="script-card">
-                <div style="display:flex; justify-content:space-between;">
+                <div class="script-header">
                     <strong>Speed & Jump Hack</strong>
-                    <button class="btn-copy" onclick="copyCode('s1')">Copy</button>
+                    <button class="btn-copy" onclick="copyText('s1')">Copy</button>
                 </div>
-                <div class="code-wrapper"><code id="s1">-- loadstring(game:HttpGet("https://rscripts.net",true))()</code></div>
+                <div class="code-container">
+                    <code id="s1">-- loadstring(game:HttpGet("https://rscripts.net",true))()</code>
+                </div>
             </div>
 
-            <!-- SCRIPT 4 - DEVICE SPOOFER PĂSTRAT ȘI REPARAT -->
-            <div class="script-card" style="border-left-color: #ff00ea;">
-                <div style="display:flex; justify-content:space-between;">
-                    <strong>Device spoofer RIVALS</strong>
-                    <button class="btn-copy" onclick="copyCode('s4')">Copy</button>
+            <!-- SCRIPT 2 -->
+            <div class="script-card">
+                <div class="script-header">
+                    <strong>Infinite Yield (Admin)</strong>
+                    <button class="btn-copy" onclick="copyText('s2')">Copy</button>
                 </div>
-                <div class="code-wrapper">
-                    <div id="codeContainer" class="collapsed-box">
-                        <code id="s4">local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                <div class="code-container">
+                    <code id="s2">loadstring(game:HttpGet("https://raw.githubusercontent.com", true))()</code>
+                </div>
+            </div>
+
+            <!-- SCRIPT 3 -->
+            <div class="script-card" style="border-left-color: #00ff88;">
+                <div class="script-header">
+                    <strong>Aimbot / ESP / Universal</strong>
+                    <button class="btn-copy" onclick="copyText('s3')">Copy</button>
+                </div>
+                <div class="code-container">
+                    <code id="s3">loadstring(game:HttpGet("https://rawscripts.net"))()</code>
+                </div>
+            </div>
+
+            <!-- SCRIPT 4 (CU SHOW MORE/LESS) -->
+            <div class="script-card" style="border-left-color: #ff00ea;">
+                <div class="script-header">
+                    <strong>Device spoofer RIVALS</strong>
+                    <button class="btn-copy" onclick="copyText('s4')">Copy</button>
+                </div>
+                <div class="code-container">
+                    <code id="s4" class="collapsed">local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
+
 local SetControlsRemote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Replication"):WaitForChild("Fighter"):WaitForChild("SetControls")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
-print("Rivals Spoofer Active")
--- Tot codul tau este aici...</code>
-                    </div>
-                    <button class="btn-toggle" onclick="toggleCode('codeContainer', this)">Show More</button>
+
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+print("Rivals Spoofer Loaded Successfully")</code>
+                    <button class="btn-toggle" onclick="toggleCode('s4', this)">Show More</button>
                 </div>
             </div>
         </div>
-
-        <!-- LISTA DE CONTURI CARE S-AU LOGAT -->
-        <div class="admin-logs">
-            <h4 style="margin:0 0 10px 0; font-size:12px; color:#00ff88;">DATABASE USERS:</h4>
-            <div id="userHistory">Admin, Guest_1</div>
-        </div>
     </div>
 
-    <!-- CHAT-UL TĂU GLOBAL -->
-    <div class="global-chat">
-        <div class="chat-header">ANNOUNCEMENTS</div>
+    <!-- CHAT GLOBAL -->
+    <div class="chat-sidebar">
+        <div class="chat-header">GLOBAL CHAT</div>
         <div id="chatMessages">
-            <div class="owner-msg"><strong>[OWNER]:</strong> Website version 2.0 is live!</div>
-            <div class="owner-msg"><strong>[OWNER]:</strong> Only I can write here.</div>
+            <div class="msg">Welcome to the Hub!</div>
         </div>
-        <p style="font-size:9px; color:#444; text-align:center;">Global Read-Only Chat</p>
-    </div>
-</div>
-
-<!-- MODAL LOGIN -->
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <h2 style="color:#00ff88; margin-top:0;">Login</h2>
-        <input type="text" id="userInput" placeholder="Username">
-        <input type="password" placeholder="Password">
-        <button onclick="handleLogin()" style="background:#00ff88; border:none; padding:12px; width:100%; font-weight:bold; border-radius:5px; cursor:pointer;">ENTER HUB</button>
-        <p onclick="closeLogin()" style="font-size:12px; color:red; cursor:pointer; margin-top:10px;">Cancel</p>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type a message..." maxlength="100">
+            <button id="sendBtn" onclick="sendMessage()">Send (30s CD)</button>
+            <small id="timerText" style="color: #555; font-size: 10px; text-align: center;"></small>
+        </div>
     </div>
 </div>
 
 <script>
-    // FIX SHOW MORE / LESS - REPARAT COMPLET
+    // REPARARE SHOW MORE
     function toggleCode(id, btn) {
-        const box = document.getElementById(id);
-        if (box.classList.contains('collapsed-box')) {
-            box.classList.remove('collapsed-box');
-            box.style.maxHeight = "none";
+        const el = document.getElementById(id);
+        if (el.classList.contains('collapsed')) {
+            el.classList.remove('collapsed');
             btn.innerText = "Show Less";
         } else {
-            box.classList.add('collapsed-box');
-            box.style.maxHeight = "85px";
+            el.classList.add('collapsed');
             btn.innerText = "Show More";
         }
     }
 
-    // LISTĂ CONTURI ȘI LOGICĂ LOGIN
-    let users = ["Admin", "Guest_1"];
-    function handleLogin() {
-        const name = document.getElementById('userInput').value || "User";
-        if (!users.includes(name)) {
-            users.push(name);
-            document.getElementById('userHistory').innerText = users.join(", ");
+    // LOGICA CHAT CU SLOW MODE (30s)
+    let canSend = true;
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const btn = document.getElementById('sendBtn');
+        const timerText = document.getElementById('timerText');
+        const chatBox = document.getElementById('chatMessages');
+
+        if (input.value.trim() !== "" && canSend) {
+            // Adauga mesajul
+            const newMsg = document.createElement('div');
+            newMsg.className = 'msg';
+            newMsg.innerText = "Guest: " + input.value;
+            chatBox.appendChild(newMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            
+            input.value = "";
+            canSend = false;
+            btn.disabled = true;
+
+            // Porneste numaratoarea inversa
+            let timeLeft = 30;
+            const timer = setInterval(() => {
+                timeLeft--;
+                timerText.innerText = "Wait " + timeLeft + "s";
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    canSend = true;
+                    btn.disabled = false;
+                    timerText.innerText = "";
+                }
+            }, 1000);
         }
-        document.getElementById('navAuth').style.display = 'none';
-        document.getElementById('userProfile').style.display = 'flex';
-        document.getElementById('displayUsername').innerText = name;
-        document.getElementById('avatarLetter').innerText = name.charAt(0).toUpperCase();
-        closeLogin();
     }
 
-    function logout() {
-        document.getElementById('navAuth').style.display = 'block';
-        document.getElementById('userProfile').style.display = 'none';
+    function copyText(id) {
+        navigator.clipboard.writeText(document.getElementById(id).innerText);
+        alert("Script Copied!");
     }
 
-    function openLogin() { document.getElementById('loginModal').style.display = 'block'; }
-    function closeLogin() { document.getElementById('loginModal').style.display = 'none'; }
-    function copyCode(id) { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Script Copied!"); }
-
-    // SEARCH FUNCTION
+    // SEARCH
     document.getElementById('searchBar').addEventListener('keyup', function(e) {
         let term = e.target.value.toLowerCase();
         let cards = document.querySelectorAll('.script-card');
