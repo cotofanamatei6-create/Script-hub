@@ -42,7 +42,7 @@
 
         .scripts-area { flex: 3; }
 
-        /* BUTON YOUTUBE NOU */
+        /* BUTON YOUTUBE */
         .btn-youtube {
             background-color: #ff0000;
             color: white;
@@ -56,21 +56,18 @@
             margin-top: 15px;
             transition: 0.3s;
             border: none;
-            cursor: pointer;
         }
         .btn-youtube:hover { background-color: #cc0000; transform: scale(1.05); }
 
-        /* CHAT GLOBAL */
+        /* CHAT SIDEBAR */
         .chat-sidebar {
             flex: 1;
             background: #161616;
             border-radius: 10px;
             border: 1px solid #333;
             height: 550px;
-            display: flex;
-            flex-direction: column;
-            position: sticky;
-            top: 70px;
+            display: flex; flex-direction: column;
+            position: sticky; top: 70px;
         }
 
         .chat-header { background: #00ff88; color: #000; padding: 10px; font-weight: bold; text-align: center; border-radius: 10px 10px 0 0; }
@@ -110,10 +107,7 @@
         <header>
             <h1>RBLXSCRIPT HUB</h1>
             <p style="color: #666;">The best scripts for the community.</p>
-            <!-- BUTONUL TAU DE YOUTUBE -->
-            <a href="https://www.youtube.com/@Foldedreal" target="_blank" class="btn-youtube">
-                ▶ Subscribe on YouTube
-            </a>
+            <a href="https://www.youtube.com" target="_blank" class="btn-youtube">▶ Subscribe on YouTube</a>
         </header>
 
         <div id="scriptList">
@@ -150,7 +144,7 @@
                 </div>
             </div>
 
-            <!-- SCRIPT 4 (COD COMPLET PĂSTRAT) -->
+            <!-- SCRIPT 4 (COD COMPLET) -->
             <div class="script-card" style="border-left-color: #ff00ea;">
                 <div class="script-header">
                     <strong>Device spoofer RIVALS</strong>
@@ -238,20 +232,19 @@ createButton("Mobile (Touch)", "Touch")</code>
         </div>
     </div>
 
-    <!-- CHAT GLOBAL -->
+    <!-- CHAT -->
     <div class="chat-sidebar">
         <div class="chat-header">GLOBAL CHAT</div>
         <div id="chatMessages"></div>
         <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="Type a message..." maxlength="100">
-            <button id="sendBtn" onclick="sendMessage()">Send (30s CD)</button>
-            <small id="timerText" style="color: #555; font-size: 10px; text-align: center;"></small>
+            <input type="text" id="chatInput" placeholder="Message..." maxlength="80">
+            <button id="sendBtn" onclick="sendMessage()">Send (30s)</button>
+            <small id="timerText" style="color: #ff4444; font-size: 10px; text-align: center; height: 12px;"></small>
         </div>
     </div>
 </div>
 
 <script>
-    // --- SHOW MORE / SHOW LESS ---
     function toggleCode(id, btn) {
         const el = document.getElementById(id);
         if (el.classList.contains('collapsed')) {
@@ -263,11 +256,10 @@ createButton("Mobile (Touch)", "Touch")</code>
         }
     }
 
-    // --- LOGICA CHAT CU SALVARE ---
     const chatBox = document.getElementById('chatMessages');
 
-    function loadMessages() {
-        const saved = JSON.parse(localStorage.getItem('hubMessages')) || [];
+    function loadChat() {
+        const saved = JSON.parse(localStorage.getItem('hubChat')) || [];
         chatBox.innerHTML = '';
         saved.forEach(m => {
             const div = document.createElement('div');
@@ -285,23 +277,21 @@ createButton("Mobile (Touch)", "Touch")</code>
         const timerText = document.getElementById('timerText');
 
         if (input.value.trim() !== "" && canSend) {
-            const messageText = "Guest: " + input.value;
-            
-            const current = JSON.parse(localStorage.getItem('hubMessages')) || [];
-            current.push(messageText);
-            localStorage.setItem('hubMessages', JSON.stringify(current));
-
-            loadMessages();
+            const msg = "Guest: " + input.value;
+            const current = JSON.parse(localStorage.getItem('hubChat')) || [];
+            current.push(msg);
+            localStorage.setItem('hubChat', JSON.stringify(current));
+            loadChat();
             
             input.value = "";
             canSend = false;
             btn.disabled = true;
 
-            let timeLeft = 30;
+            let left = 30;
             const timer = setInterval(() => {
-                timeLeft--;
-                timerText.innerText = "Wait " + timeLeft + "s";
-                if (timeLeft <= 0) {
+                left--;
+                timerText.innerText = "Wait " + left + "s";
+                if (left <= 0) {
                     clearInterval(timer);
                     canSend = true;
                     btn.disabled = false;
@@ -316,7 +306,6 @@ createButton("Mobile (Touch)", "Touch")</code>
         alert("Script Copied!");
     }
 
-    // --- SEARCH ---
     document.getElementById('searchBar').addEventListener('keyup', function(e) {
         let term = e.target.value.toLowerCase();
         let cards = document.querySelectorAll('.script-card');
@@ -326,7 +315,7 @@ createButton("Mobile (Touch)", "Touch")</code>
         });
     });
 
-    loadMessages();
+    loadChat();
 </script>
 
 </body>
