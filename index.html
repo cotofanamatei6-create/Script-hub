@@ -43,9 +43,8 @@
             outline: none;
         }
 
-        /* Stil Cont Utilizator (Sus) */
         .user-profile {
-            display: none; /* Ascuns pana la login */
+            display: none;
             align-items: center;
             gap: 10px;
             background: #252525;
@@ -91,7 +90,6 @@
         h1 { color: #00ff88; margin-bottom: 5px; font-size: 3rem; text-shadow: 0 0 10px #00ff8855; }
         p { color: #aaa; }
 
-        /* GRID SCRIPTURI - Mai multe casute */
         .script-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -106,13 +104,19 @@
             border-left: 5px solid #007bff;
             transition: 0.3s;
         }
-        .script-card:hover { transform: translateY(-5px); background: #222; }
+        .script-card:hover { transform: translateY(-3px); background: #222; }
 
         .script-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+        }
+
+        /* Stil pentru cod cu limitare */
+        .code-wrapper {
+            position: relative;
+            overflow: hidden;
         }
 
         code {
@@ -127,6 +131,25 @@
             word-break: break-all;
             border: 1px solid #222;
         }
+
+        /* Clase pentru Show More */
+        .collapsed {
+            max-height: 100px; /* Inaltimea cand e inchis */
+        }
+
+        .btn-toggle {
+            background: transparent;
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            margin-top: 8px;
+            font-weight: bold;
+            display: block;
+        }
+        .btn-toggle:hover { background: #00ff88; color: #000; }
 
         .btn-copy {
             background: #00ff88;
@@ -201,7 +224,6 @@
         <button onclick="openLogin()">Login / Sign Up</button>
     </div>
 
-    <!-- PROFIL UTILIZATOR (Apare dupa Login) -->
     <div class="user-profile" id="userProfile">
         <div class="user-avatar" id="avatarLetter">U</div>
         <span id="displayUsername" style="font-weight: bold;">User</span>
@@ -224,7 +246,7 @@
                 <span><strong>Speed & Jump Hack</strong></span>
                 <button class="btn-copy" onclick="copyCode('s1')">Copy</button>
             </div>
-            <code id="s1">-- loadstring(game:HttpGet("https://raw.githubusercontent.com"))()</code>
+            <code id="s1">-- loadstring(game:HttpGet("https://rscripts.net/raw/universial-speed-and-jump-hack_1761137774539_6FaOyaBgqj.txt",true))()</code>
         </div>
 
         <!-- SCRIPT 2 -->
@@ -233,34 +255,47 @@
                 <span><strong>Infinite Yield (Admin)</strong></span>
                 <button class="btn-copy" onclick="copyCode('s2')">Copy</button>
             </div>
-            <code id="s2">loadstring(game:HttpGet("https://raw.githubusercontent.com", true))()</code>
+            <code id="s2">loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source", true))()</code>
         </div>
 
-        <!-- SCRIPT 3 (CASUTA NOUA) -->
+        <!-- SCRIPT 3 -->
         <div class="script-card" style="border-left-color: #00ff88;">
             <div class="script-header">
-                <span><strong>Aimbot / ESP</strong></span>
+                <span><strong>Aimbot / ESP / Universal</strong></span>
                 <button class="btn-copy" onclick="copyCode('s3')">Copy</button>
             </div>
-            <code id="s3">loadstring(game:HttpGet("https://raw.githubusercontent.com"))()</code>
+            <code id="s3">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Aimbot_179"))()</code>
         </div>
 
-        <!-- SCRIPT 4 (CASUTA NOUA) -->
+        <!-- SCRIPT 4 (CU SHOW MORE/LESS) -->
         <div class="script-card" style="border-left-color: #ff00ea;">
             <div class="script-header">
-                <span><strong>Auto-Farm Wood</strong></span>
+                <span><strong>Device spoofer RIVALS</strong></span>
                 <button class="btn-copy" onclick="copyCode('s4')">Copy</button>
             </div>
-            <code id="s4">loadstring(game:HttpGet("https://raw.githubusercontent.com"))()</code>
+            <div class="code-wrapper">
+                <code id="s4" class="collapsed">local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local SetControlsRemote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Replication"):WaitForChild("Fighter"):WaitForChild("SetControls")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+-- ... more code here ...
+print("Spoofer Loaded Successfully")</code>
+                <button class="btn-toggle" onclick="toggleCode('s4', this)">Show More</button>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- MODAL LOGIN -->
 <div id="loginModal" class="modal">
     <div class="modal-content">
         <h2 style="color: #00ff88; margin-top: 0;">Welcome</h2>
-        <p style="font-size: 13px; color: #777;">Login or create an account to continue.</p>
         <input type="text" id="userInput" placeholder="Username">
         <input type="password" placeholder="Password">
         <button class="btn-submit" onclick="handleLogin()">Login / Sign Up</button>
@@ -268,25 +303,27 @@
     </div>
 </div>
 
-<footer>
-    &copy; 2026 RBLXSCRIPT Hub - Built for the community.
-</footer>
+<footer>&copy; 2026 RBLXSCRIPT Hub</footer>
 
 <script>
-    // Sistem Login Vizual
-    function handleLogin() {
-        const user = document.getElementById('userInput').value;
-        if(user.length < 3) {
-            alert("Please enter a valid username");
-            return;
+    // Functie Toggle Show More / Show Less
+    function toggleCode(id, btn) {
+        const codeElement = document.getElementById(id);
+        if (codeElement.classList.contains('collapsed')) {
+            codeElement.classList.remove('collapsed');
+            btn.innerText = "Show Less";
+        } else {
+            codeElement.classList.add('collapsed');
+            btn.innerText = "Show More";
         }
-        
-        // Ascunde butonul de login, arata profilul
+    }
+
+    function handleLogin() {
+        const user = document.getElementById('userInput').value || "User";
         document.getElementById('navAuth').style.display = 'none';
         document.getElementById('userProfile').style.display = 'flex';
         document.getElementById('displayUsername').innerText = user;
-        document.getElementById('avatarLetter').innerText = user[0].toUpperCase();
-        
+        document.getElementById('avatarLetter').innerText = user.charAt(0).toUpperCase();
         closeLogin();
     }
 
@@ -305,7 +342,6 @@
         });
     }
 
-    // Cautare Functionala
     document.getElementById('searchBar').addEventListener('keyup', function(e) {
         let term = e.target.value.toLowerCase();
         let cards = document.querySelectorAll('.script-card');
