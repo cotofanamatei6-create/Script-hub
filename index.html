@@ -42,6 +42,24 @@
 
         .scripts-area { flex: 3; }
 
+        /* BUTON YOUTUBE NOU */
+        .btn-youtube {
+            background-color: #ff0000;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-youtube:hover { background-color: #cc0000; transform: scale(1.05); }
+
         /* CHAT GLOBAL */
         .chat-sidebar {
             flex: 1;
@@ -92,6 +110,10 @@
         <header>
             <h1>RBLXSCRIPT HUB</h1>
             <p style="color: #666;">The best scripts for the community.</p>
+            <!-- BUTONUL TAU DE YOUTUBE -->
+            <a href="https://www.youtube.com/@Foldedreal" target="_blank" class="btn-youtube">
+                ▶ Subscribe on YouTube
+            </a>
         </header>
 
         <div id="scriptList">
@@ -102,7 +124,7 @@
                     <button class="btn-copy" onclick="copyText('s1')">Copy</button>
                 </div>
                 <div class="code-container">
-                    <code id="s1">loadstring(game:HttpGet("https://rscripts.net/raw/universial-speed-and-jump-hack_1761137774539_6FaOyaBgqj.txt",true))()</code>
+                    <code id="s1">loadstring(game:HttpGet("https://rscripts.net",true))()</code>
                 </div>
             </div>
 
@@ -113,7 +135,7 @@
                     <button class="btn-copy" onclick="copyText('s2')">Copy</button>
                 </div>
                 <div class="code-container">
-                    <code id="s2">loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source", true))()</code>
+                    <code id="s2">loadstring(game:HttpGet("https://raw.githubusercontent.com", true))()</code>
                 </div>
             </div>
 
@@ -124,11 +146,11 @@
                     <button class="btn-copy" onclick="copyText('s3')">Copy</button>
                 </div>
                 <div class="code-container">
-                    <code id="s3">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Aimbot_179"))()</code>
+                    <code id="s3">loadstring(game:HttpGet("https://rawscripts.net"))()</code>
                 </div>
             </div>
 
-            <!-- SCRIPT 4 (REPARAT - TOT CODUL ESTE AICI) -->
+            <!-- SCRIPT 4 (COD COMPLET PĂSTRAT) -->
             <div class="script-card" style="border-left-color: #ff00ea;">
                 <div class="script-header">
                     <strong>Device spoofer RIVALS</strong>
@@ -229,7 +251,7 @@ createButton("Mobile (Touch)", "Touch")</code>
 </div>
 
 <script>
-    // REPARARE SHOW MORE
+    // --- SHOW MORE / SHOW LESS ---
     function toggleCode(id, btn) {
         const el = document.getElementById(id);
         if (el.classList.contains('collapsed')) {
@@ -241,7 +263,7 @@ createButton("Mobile (Touch)", "Touch")</code>
         }
     }
 
-    // LOGICA CHAT CU SALVARE (localStorage)
+    // --- LOGICA CHAT CU SALVARE ---
     const chatBox = document.getElementById('chatMessages');
 
     function loadMessages() {
@@ -265,7 +287,6 @@ createButton("Mobile (Touch)", "Touch")</code>
         if (input.value.trim() !== "" && canSend) {
             const messageText = "Guest: " + input.value;
             
-            // Salvare in memorie
             const current = JSON.parse(localStorage.getItem('hubMessages')) || [];
             current.push(messageText);
             localStorage.setItem('hubMessages', JSON.stringify(current));
@@ -295,7 +316,7 @@ createButton("Mobile (Touch)", "Touch")</code>
         alert("Script Copied!");
     }
 
-    // SEARCH
+    // --- SEARCH ---
     document.getElementById('searchBar').addEventListener('keyup', function(e) {
         let term = e.target.value.toLowerCase();
         let cards = document.querySelectorAll('.script-card');
@@ -305,7 +326,6 @@ createButton("Mobile (Touch)", "Touch")</code>
         });
     });
 
-    // Incarca mesajele la pornire
     loadMessages();
 </script>
 
