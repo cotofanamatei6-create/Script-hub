@@ -3,35 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solara Script Hub</title>
+    <title>Solara Script Hub - Dashboard</title>
     <style>
-        /* General Style */
+        /* Stil General - Păstrat și îmbunătățit */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #0f0f0f;
             color: #ffffff;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
+        /* BARA DE NAVIGARE (NOU) */
+        nav {
+            width: 100%;
+            background: #1a1a1a;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00ff88;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo { font-size: 20px; font-weight: bold; color: #00ff88; text-decoration: none; }
+        
+        .search-box {
+            background: #000;
+            border: 1px solid #333;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            width: 300px;
+            outline: none;
+        }
+
+        .nav-btns a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+            background: #333;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .nav-btns a:hover { background: #00ff88; color: #000; }
+
         .container {
             max-width: 900px;
             width: 100%;
+            padding: 20px;
         }
 
         header {
             text-align: center;
             padding: 40px 0;
-            border-bottom: 1px solid #333;
             margin-bottom: 30px;
         }
 
         h1 { color: #00ff88; margin-bottom: 10px; }
         p { color: #aaa; }
 
+        /* SECȚIUNEA DOWNLOAD (NOU) */
+        .download-box {
+            background: linear-gradient(145deg, #1a1a1a, #252525);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+            border: 1px solid #00ff88;
+        }
+
+        .btn-main-download {
+            background: #00ff88;
+            color: #000;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        .btn-main-download:hover { transform: scale(1.05); box-shadow: 0 0 15px #00ff88; }
 
         /* Scripts Section */
         .script-card {
@@ -78,10 +138,21 @@
             text-align: center;
             color: #555;
             font-size: 0.8rem;
+            padding-bottom: 20px;
         }
     </style>
 </head>
 <body>
+
+<!-- BARA DE NAVIGARE -->
+<nav>
+    <a href="#" class="nav-logo">SOLARA HUB</a>
+    <input type="text" class="search-box" placeholder="Search scripts or tools...">
+    <div class="nav-btns">
+        <a href="#">Home</a>
+        <a href="#" style="border: 1px solid #00ff88;">Login</a>
+    </div>
+</nav>
 
 <div class="container">
     <header>
@@ -89,6 +160,14 @@
         <p>The best scripts and tools in one place.</p>
     </header>
 
+    <!-- SECȚIUNE DOWNLOAD FILĂ -->
+    <div class="download-box">
+        <span style="font-size: 40px;">💾</span>
+        <h3>Main Executor Tool</h3>
+        <p>Download the latest version of Solara Executor</p>
+        <!-- ÎNLOCUIEȘTE "LINK_DOWNLOAD_AICI" CU LINK-UL TĂU -->
+        <a href="LINK_DOWNLOAD_AICI" class="btn-main-download" download>DOWNLOAD NOW</a>
+    </div>
 
     <h2>Available Scripts</h2>
 
@@ -126,6 +205,16 @@
             setTimeout(() => btn.innerText = "Copy", 2000);
         });
     }
+
+    // Funcție simplă pentru bară de căutare (vizual)
+    document.querySelector('.search-box').addEventListener('keyup', function(e) {
+        let term = e.target.value.toLowerCase();
+        let cards = document.querySelectorAll('.script-card');
+        cards.forEach(card => {
+            let title = card.querySelector('span').innerText.toLowerCase();
+            card.style.display = title.includes(term) ? "block" : "none";
+        });
+    });
 </script>
 
 </body>
